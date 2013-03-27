@@ -1,0 +1,9 @@
+name: SuperCraftBrothers
+main: me.chaseoes.supercraftbrothers.SuperCraftBrothers
+version: 0.1
+description: Super Craft Brothers Brawl in Minecraft.
+authors: [chaseoes, psycowithespn]
+commands:
+  scbb:
+    description: The central command for the SuperCraftBrothers plugin.
+    usage: /scbb [args]
