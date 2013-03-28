@@ -1,5 +1,6 @@
 package me.chaseoes.supercraftbrothers.commands;
 
+import me.chaseoes.supercraftbrothers.SCBGameManager;
 import me.chaseoes.supercraftbrothers.SCBMap;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,9 +20,12 @@ public class CommandManager implements CommandExecutor {
         if (strings[0].equalsIgnoreCase("createmap")) {
             if (strings.length > 1) {
                 String mapName = strings[1];
-                //TODO: Call central Game / Map storage to see if it exists
-                //TODO: Call central Game / Map storage from SCB.getInst() to create it in config
-                cs.sendMessage("Created map " + mapName);
+                if (SCBGameManager.getInstance().getGame(mapName) != null) {
+                    cs.sendMessage("Map already exists");
+                } else {
+                    //TODO: Call central Game / Map storage from SCB.getInst() to create it in config
+                    cs.sendMessage("Created map " + mapName);
+                }
             } else {
                 cs.sendMessage("Usage: /scb createmap <map name>");
             }
@@ -31,9 +35,12 @@ public class CommandManager implements CommandExecutor {
         if (strings[0].equalsIgnoreCase("deletemap")) {
             if (strings.length > 1) {
                 String mapName = strings[1];
-                //TODO: Call central Game / Map storage to see if it exists
-                //TODO: Call central Game / Map storage from SCB.getInst() to unload and delete
-                cs.sendMessage("Deleted map " + mapName);
+                if (SCBGameManager.getInstance().getGame(mapName) == null) {
+                    cs.sendMessage("Map doesn't exist");
+                } else {
+                    //TODO: Call central Game / Map storage from SCB.getInst() to unload and delete
+                    cs.sendMessage("Deleted map " + mapName);
+                }
             } else {
                 cs.sendMessage("Usage: /scb deletemap <map name>");
             }
@@ -49,9 +56,13 @@ public class CommandManager implements CommandExecutor {
                     if (strings[1].equalsIgnoreCase("lobby")) {
                         if (strings.length > 2) {
                             String mapName = strings[2];
-                            SCBMap map = null; //TODO: Getting map from w/e storage its called
-                            map.setClassLobby(player.getLocation());
+                            //SCBMap map = SCBGameManager.getInstance().getGame(mapName);
+                            //if (map == null) {
+                            //    cs.sendMessage("Map doesn't exist");
+                            //} else {
+                            //map.setClassLobby(player.getLocation());
                             cs.sendMessage("Set the lobby of " + mapName);
+                            //}
                         } else {
                             cs.sendMessage("Usage: /scb set lobby <map name>");
                         }
@@ -70,6 +81,10 @@ public class CommandManager implements CommandExecutor {
                             if (i > 0 && i < 5) {
                                 String mapName = strings[2];
                                 SCBMap map = null; //TODO: Getting map from w/e storage its called
+                                //SCBMap map = SCBGameManager.getInstance().getGame(mapName);
+                                //if (map == null) {
+                                //    cs.sendMessage("Map doesn't exist");
+                                //} else {
                                 switch (i) {
                                     case 1:
                                         map.setSp1(player.getLocation());
@@ -86,6 +101,7 @@ public class CommandManager implements CommandExecutor {
                                     default:
                                         cs.sendMessage("YOU BORKED THE RULES");
                                 }
+                                //}
                             } else {
                                 cs.sendMessage(i + " is not between 1 and 4");
                             }

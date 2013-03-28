@@ -5,6 +5,8 @@ import me.chaseoes.supercraftbrothers.listeners.PlayerInteractListener;
 import me.chaseoes.supercraftbrothers.listeners.SignChangeListener;
 import me.chaseoes.supercraftbrothers.utilities.mysql.Mysql;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,6 +36,11 @@ public class SuperCraftBrothers extends JavaPlugin {
                 HUBSigns.update();
             }
         }, 0L, 20L);
+
+        //Reloads happen
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            SCBGameManager.getInstance().getCraftBrother(player.getName());
+        }
     }
     
     public void onDisable() {
