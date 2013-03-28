@@ -1,5 +1,7 @@
 package me.chaseoes.supercraftbrothers;
 
+import me.chaseoes.supercraftbrothers.utilities.SerializableLocation;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -12,6 +14,7 @@ public class SCBGameManager {
     private HashMap<String, SCBGame> games = new HashMap<String, SCBGame>();
     private HashMap<String, CraftBrother> bros = new HashMap<String, CraftBrother>();
     private SuperCraftBrothers plugin;
+    private Location mainLobby;
 
     private SCBGameManager() {
     }
@@ -32,6 +35,10 @@ public class SCBGameManager {
                 addGame(new SCBGame(plugin, name));
             }
         }
+        if (plugin.getConfig().isString("main-lobby"))
+            mainLobby = SerializableLocation.stringToLocation(plugin.getConfig().getString("main-lobby"));
+        else
+            mainLobby = null;
     }
 
     //Returns a game if one was created, else null if one already exists
@@ -111,4 +118,13 @@ public class SCBGameManager {
         return games.values();
     }
 
+    public Location getMainLobby() {
+        return mainLobby;
+    }
+
+    public void setMainLobby(Location mainLobby) {
+        plugin.getConfig().set("main-lobby", SerializableLocation.locationToString(mainLobby));
+        plugin.saveConfig();
+        this.mainLobby = mainLobby;
+    }
 }

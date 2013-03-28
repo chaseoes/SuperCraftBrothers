@@ -9,6 +9,8 @@ public class SCBGame {
     private SCBMap map;
     private final SuperCraftBrothers plugin;
     private final Set<CraftBrother> ingame = new HashSet<CraftBrother>();
+    // !inLobby implies inGame
+    private boolean inLobby = true;
 
     public SCBGame(SuperCraftBrothers plugin, String name) {
         this.plugin = plugin;
@@ -31,12 +33,14 @@ public class SCBGame {
         if (getNumberIngame() > 3)
             throw new RuntimeException("SOMEONE BROKE SOMETHING JOINING GAMES");
         ingame.add(bro);
+        bro.getPlayer().teleport(map.getClassLobby());
     }
 
     public void leaveLobby(CraftBrother bro) {
         if (!ingame.contains(bro))
             return;
         ingame.remove(bro);
+        bro.getPlayer().teleport(SCBGameManager.getInstance().getMainLobby());
     }
 
     public void joinGame(CraftBrother bro) {
@@ -49,5 +53,23 @@ public class SCBGame {
 
     public int getNumberIngame() {
         return ingame.size();
+    }
+
+    public void broadcast(String message) {
+        for (CraftBrother bro : ingame) {
+            bro.getPlayer().sendMessage(message);
+        }
+    }
+
+    public boolean isInLobby() {
+        return inLobby;
+    }
+
+    public boolean isInGame() {
+        return !inLobby;
+    }
+
+    public void setInLobby(boolean b) {
+        inLobby = b;
     }
 }

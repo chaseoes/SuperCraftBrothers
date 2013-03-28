@@ -9,6 +9,7 @@ public class CraftBrother {
     private int lives;
     private int kills;
     private boolean isInLobby;
+    private CraftBrother lastDamagedBy;
     
     public CraftBrother(String name) {
         name = this.name;
@@ -64,4 +65,11 @@ public class CraftBrother {
         
     }
 
+    public CraftBrother getLastDamagedBy() {
+        return lastDamagedBy;
+    }
+
+    public void setLastDamagedBy(CraftBrother lastDamagedBy) {
+        this.lastDamagedBy = lastDamagedBy;
+    }
 }
