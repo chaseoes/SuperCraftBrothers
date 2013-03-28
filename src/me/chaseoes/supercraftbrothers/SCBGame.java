@@ -1,5 +1,6 @@
 package me.chaseoes.supercraftbrothers;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -35,24 +36,52 @@ public class SCBGame {
         if (getNumberIngame() > 3)
             throw new RuntimeException("SOMEONE BROKE SOMETHING JOINING GAMES");
         CraftBrother cBro = SCBGameManager.getInstance().addCraftBrother(bro.getName());
-        ingame.put(bro.getName().toLowerCase(), cBro).setCurrentGame(this);
+        cBro.setInLobby(true);
+        cBro.setCurrentGame(this);
+        ingame.put(bro.getName().toLowerCase(), cBro);
         bro.teleport(map.getClassLobby());
+        bro.sendMessage("You have joined " + getName() + ", select a class to continue.");
+        if (getNumberIngame() == 4) {
+            Schedulers.getInstance().startLobbyCountdown(this);
+        }
     }
 
-    public void leaveLobby(CraftBrother bro) {
-        if (!ingame.containsValue(bro))
+    public void leaveLobby(Player bro) {
+        if (!ingame.containsKey(bro.getName().toLowerCase()))
             return;
-        ingame.remove(bro);
-        bro.getPlayer().teleport(SCBGameManager.getInstance().getMainLobby());
+        ingame.remove(bro.getName().toLowerCase());
+        bro.teleport(SCBGameManager.getInstance().getMainLobby());
+        bro.sendMessage("You left the lobby");
         SCBGameManager.getInstance().removeCraftBrother(bro.getPlayer().getName());
     }
 
-    public void joinGame(CraftBrother bro) {
+    //Do we even need this?
+    public void joinGame(Player bro) {
         //TODO: Class settin and shizz
     }
 
-    public void leaveGame(CraftBrother bro) {
+    public void leaveGame(Player bro) {
+        if (!ingame.containsKey(bro.getName().toLowerCase()))
+            return;
+        ingame.remove(bro.getName().toLowerCase());
+        bro.teleport(SCBGameManager.getInstance().getMainLobby());
+        bro.sendMessage("You left the game");
+        SCBGameManager.getInstance().removeCraftBrother(bro.getName());
+        checkWin();
+    }
 
+    public void checkWin() {
+        if (ingame.size() == 1) {
+            winGame((CraftBrother) ingame.values().toArray()[0]);
+        }
+    }
+
+    public void winGame(CraftBrother bro) {
+        Bukkit.broadcastMessage(bro.getPlayer().getName() + " has won on " + getName());
+        bro.getPlayer().teleport(SCBGameManager.getInstance().getMainLobby());
+        SCBGameManager.getInstance().removeCraftBrother(bro.getPlayer().getName());
+        ingame.clear();
+        setInLobby(true);
     }
 
     public int getNumberIngame() {
