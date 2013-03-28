@@ -1,9 +1,9 @@
 package me.chaseoes.supercraftbrothers;
 
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
-
-import java.util.HashMap;
 
 public class Schedulers {
 
@@ -11,7 +11,8 @@ public class Schedulers {
     private SuperCraftBrothers plugin;
     private HashMap<String, Integer> lobbyCountdowns = new HashMap<String, Integer>();
 
-    private Schedulers() { }
+    private Schedulers() {
+    }
 
     public static Schedulers getInstance() {
         return instance;
@@ -22,7 +23,9 @@ public class Schedulers {
     }
 
     public void startLobbyCountdown(final SCBGame game) {
-        if (lobbyCountdowns.containsKey(game.getName())) return;
+        if (lobbyCountdowns.containsKey(game.getName())) {
+            return;
+        }
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
 
             int i = 30;

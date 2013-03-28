@@ -6,7 +6,7 @@ import me.chaseoes.supercraftbrothers.CraftBrother;
 import me.chaseoes.supercraftbrothers.SuperCraftBrothers;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -14,10 +14,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.Material;
 
 public class SCBClass {
-    
+
     String name;
     ConfigurationSection config;
 
@@ -43,19 +42,19 @@ public class SCBClass {
                 clearInventory(player.getPlayer());
 
                 // Loop through potion effects.
-                    for (String effect : SuperCraftBrothers.getInstance().getConfig().getStringList("classes." + name + ".potion-effects")) {
-                        String[] effects = effect.split("\\.");
-                        PotionEffectType et = PotionEffectType.getByName(effects[0]);
-                        int amplifier = Integer.parseInt(effects[1]) - 1;
-                        int duration = 0;
-                        if (effects[2].equalsIgnoreCase("forever")) {
-                            duration = Integer.MAX_VALUE;
-                        } else {
-                            duration = Integer.parseInt(effects[2]) * 20;
-                        }
-                        PotionEffect e = new PotionEffect(et, duration, amplifier);
-                        player.getPlayer().addPotionEffect(e);
+                for (String effect : SuperCraftBrothers.getInstance().getConfig().getStringList("classes." + name + ".potion-effects")) {
+                    String[] effects = effect.split("\\.");
+                    PotionEffectType et = PotionEffectType.getByName(effects[0]);
+                    int amplifier = Integer.parseInt(effects[1]) - 1;
+                    int duration = 0;
+                    if (effects[2].equalsIgnoreCase("forever")) {
+                        duration = Integer.MAX_VALUE;
+                    } else {
+                        duration = Integer.parseInt(effects[2]) * 20;
                     }
+                    PotionEffect e = new PotionEffect(et, duration, amplifier);
+                    player.getPlayer().addPotionEffect(e);
+                }
 
                 // Loop through armor items.
                 ItemStack[] armor = new ItemStack[4];
@@ -135,7 +134,7 @@ public class SCBClass {
 
                     player.getPlayer().getInventory().addItem(i);
                 }
- 
+
                 player.setCurrentClass(this);
 
                 player.getPlayer().updateInventory();

@@ -1,22 +1,27 @@
 package me.chaseoes.supercraftbrothers.utilities.mysql;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+
 import me.chaseoes.supercraftbrothers.SuperCraftBrothers;
+
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.sql.*;
-import java.util.logging.Level;
+public class MySQL {
 
-public class Mysql {
-
-    private static final Mysql instance = new Mysql();
+    private static final MySQL instance = new MySQL();
     private SuperCraftBrothers plugin;
     private Connection conn;
     private boolean connected = false;
     private BukkitTask consumerTask;
     private BukkitTask connTask;
 
-    public static Mysql getInstance() {
+    public static MySQL getInstance() {
         return instance;
     }
 
@@ -46,17 +51,19 @@ public class Mysql {
                     plugin.getServer().getPluginManager().disablePlugin(plugin);
                 }
                 if (connected) {
-                    consumerTask = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, MysqlConsumer.getInstance(), 1L, 5L);
+                    consumerTask = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, MySQLConsumer.getInstance(), 1L, 5L);
                 }
             }
         });
     }
 
     public void close() {
-        if (consumerTask != null)
+        if (consumerTask != null) {
             consumerTask.cancel();
-        if (connTask != null)
+        }
+        if (connTask != null) {
             connTask.cancel();
+        }
         try {
             conn.close();
         } catch (SQLException e) {

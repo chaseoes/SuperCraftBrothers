@@ -1,10 +1,10 @@
 package me.chaseoes.supercraftbrothers;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import java.util.Collection;
 import java.util.HashMap;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 public class SCBGame {
 
@@ -31,10 +31,12 @@ public class SCBGame {
     }
 
     public void joinLobby(Player bro) {
-        if (ingame.containsKey(bro.getName().toLowerCase()))
+        if (ingame.containsKey(bro.getName().toLowerCase())) {
             return;
-        if (getNumberIngame() > 3)
+        }
+        if (getNumberIngame() > 3) {
             throw new RuntimeException("SOMEONE BROKE SOMETHING JOINING GAMES");
+        }
         CraftBrother cBro = SCBGameManager.getInstance().addCraftBrother(bro.getName());
         cBro.setInLobby(true);
         cBro.setCurrentGame(this);
@@ -47,22 +49,24 @@ public class SCBGame {
     }
 
     public void leaveLobby(Player bro) {
-        if (!ingame.containsKey(bro.getName().toLowerCase()))
+        if (!ingame.containsKey(bro.getName().toLowerCase())) {
             return;
+        }
         ingame.remove(bro.getName().toLowerCase());
         bro.teleport(SCBGameManager.getInstance().getMainLobby());
         bro.sendMessage("You left the lobby");
         SCBGameManager.getInstance().removeCraftBrother(bro.getPlayer().getName());
     }
 
-    //Do we even need this?
+    // Do we even need this?
     public void joinGame(Player bro) {
-        //TODO: Class settin and shizz
+        // TODO: Class settin and shizz
     }
 
     public void leaveGame(Player bro) {
-        if (!ingame.containsKey(bro.getName().toLowerCase()))
+        if (!ingame.containsKey(bro.getName().toLowerCase())) {
             return;
+        }
         ingame.remove(bro.getName().toLowerCase());
         bro.teleport(SCBGameManager.getInstance().getMainLobby());
         bro.sendMessage("You left the game");

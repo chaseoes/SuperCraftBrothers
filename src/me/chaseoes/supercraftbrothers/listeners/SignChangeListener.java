@@ -1,9 +1,7 @@
 package me.chaseoes.supercraftbrothers.listeners;
 
-import me.chaseoes.supercraftbrothers.SCBGame;
 import me.chaseoes.supercraftbrothers.SCBGameManager;
 import me.chaseoes.supercraftbrothers.SCBMap;
-import me.chaseoes.supercraftbrothers.SuperCraftBrothers;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -12,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
 public class SignChangeListener implements Listener {
-    
+
     @EventHandler
     public void onSignChange(SignChangeEvent event) {
         if (event.getLine(0).equalsIgnoreCase("[SCB]")) {

@@ -21,16 +21,16 @@ public class PlayerInteractListener implements Listener {
                 SCBClass sc = new SCBClass(className);
                 sc.apply(SCBGameManager.getInstance().getCraftBrother(event.getPlayer()));
             }
-            
+
             if (s.getLine(0).equalsIgnoreCase("SuperCraftBros")) {
                 String mapName = ChatColor.stripColor(s.getLine(1));
                 SCBGameManager.getInstance().getGame(mapName).joinGame(event.getPlayer());
             }
         }
-        
+
         for (SCBGame game : SCBGameManager.getInstance().getAllGames()) {
-            
+
         }
     }
-    
+
 }

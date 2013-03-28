@@ -1,12 +1,13 @@
 package me.chaseoes.supercraftbrothers;
 
-import me.chaseoes.supercraftbrothers.utilities.SerializableLocation;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+
+import me.chaseoes.supercraftbrothers.utilities.SerializableLocation;
+
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 public class SCBGameManager {
 
@@ -35,13 +36,14 @@ public class SCBGameManager {
                 addGame(new SCBGame(plugin, name));
             }
         }
-        if (plugin.getConfig().isString("main-lobby"))
+        if (plugin.getConfig().isString("main-lobby")) {
             mainLobby = SerializableLocation.stringToLocation(plugin.getConfig().getString("main-lobby"));
-        else
+        } else {
             mainLobby = null;
+        }
     }
 
-    //Returns a game if one was created, else null if one already exists
+    // Returns a game if one was created, else null if one already exists
     public SCBGame createGame(String name) {
         if (getGame(name) == null) {
             SCBGame game = games.put(name, new SCBGame(plugin, name));
@@ -54,7 +56,7 @@ public class SCBGameManager {
         return null;
     }
 
-    //TODO: disable and kick everyone from said game before deleting
+    // TODO: disable and kick everyone from said game before deleting
     public boolean deleteGame(String name) {
         if (getGame(name) != null) {
             games.remove(name);
@@ -69,12 +71,16 @@ public class SCBGameManager {
     }
 
     public CraftBrother getCraftBrother(Player player) {
-        if (player == null) return null;
+        if (player == null) {
+            return null;
+        }
         return getCraftBrother(player.getName());
     }
 
     public CraftBrother getCraftBrother(String player) {
-        if (player == null) return null;
+        if (player == null) {
+            return null;
+        }
         if (bros.containsKey(player.toLowerCase())) {
             return bros.get(player.toLowerCase());
         }
@@ -86,13 +92,15 @@ public class SCBGameManager {
     }
 
     public void removeCraftBrother(String player) {
-        if (player == null) return;
+        if (player == null) {
+            return;
+        }
         if (bros.containsKey(player.toLowerCase())) {
             bros.remove(player.toLowerCase());
         }
     }
 
-    //True if the player can be found in a SCBGame object
+    // True if the player can be found in a SCBGame object
     public boolean isInGame(String player) {
         return bros.containsKey(player.toLowerCase());
     }
@@ -105,19 +113,25 @@ public class SCBGameManager {
     }
 
     public void addGame(SCBGame game) {
-        if (game == null) return;
+        if (game == null) {
+            return;
+        }
         if (!games.containsKey(game.getName().toLowerCase())) {
             games.put(game.getName().toLowerCase(), game);
         }
     }
 
     public void removeGame(SCBGame game) {
-        if (game == null) return;
+        if (game == null) {
+            return;
+        }
         removeGame(game.getName());
     }
 
     public void removeGame(String game) {
-        if (game == null) return;
+        if (game == null) {
+            return;
+        }
         if (games.containsKey(game.toLowerCase())) {
             games.remove(game.toLowerCase());
         }

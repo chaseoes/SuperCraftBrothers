@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class CraftBrother {
-    
+
     private String name;
     private int lives;
     private int kills;
@@ -20,15 +20,15 @@ public class CraftBrother {
         lives = 4;
         kills = 0;
     }
-    
+
     public Player getPlayer() {
         return Bukkit.getPlayer(name);
     }
-    
+
     public int getLivesLeft() {
         return lives;
     }
-    
+
     public void setLivesLeft(int i) {
         if (i != -1) {
             lives = i;
@@ -36,11 +36,11 @@ public class CraftBrother {
             lives--;
         }
     }
-    
+
     public int getKills() {
         return kills;
     }
-    
+
     public void setKills(int i) {
         if (i != -1) {
             kills = i;
@@ -48,27 +48,27 @@ public class CraftBrother {
             kills--;
         }
     }
-    
+
     public void setInLobby(boolean b) {
         isInLobby = b;
     }
-    
+
     public boolean isInLobby() {
         return isInLobby;
     }
-    
+
     public SCBGame getCurrentGame() {
         return currentGame;
     }
-    
+
     public void setCurrentGame(SCBGame game) {
         currentGame = game;
     }
-    
+
     public String getCurrentClass() {
         return currentClass;
     }
-    
+
     public void setCurrentClass(SCBClass c) {
         currentClass = c.getName();
     }

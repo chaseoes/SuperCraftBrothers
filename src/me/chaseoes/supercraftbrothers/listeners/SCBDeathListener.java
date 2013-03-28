@@ -8,7 +8,6 @@ public class SCBDeathListener implements Listener {
 
     public void onSCBDeath(SCBDeathEvent event) {
 
-
         event.getKilled().setLastDamagedBy(null);
     }
 }

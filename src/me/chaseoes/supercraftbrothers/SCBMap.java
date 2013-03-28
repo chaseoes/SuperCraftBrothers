@@ -1,6 +1,7 @@
 package me.chaseoes.supercraftbrothers;
 
 import me.chaseoes.supercraftbrothers.utilities.SerializableLocation;
+
 import org.bukkit.Location;
 import org.bukkit.configuration.Configuration;
 
@@ -19,58 +20,70 @@ public class SCBMap {
 
     public void load() {
         Configuration config = plugin.getConfig();
-        if (config.isString("map." + game.getName() + ".sp1"))
+        if (config.isString("map." + game.getName() + ".sp1")) {
             sp1 = SerializableLocation.stringToLocation(config.getString("map." + game.getName() + ".sp1"));
-        else
+        } else {
             sp1 = null;
-        if (config.isString("map." + game.getName() + ".sp2"))
+        }
+        if (config.isString("map." + game.getName() + ".sp2")) {
             sp2 = SerializableLocation.stringToLocation(config.getString("map." + game.getName() + ".sp2"));
-        else
+        } else {
             sp2 = null;
-        if (config.isString("map." + game.getName() + ".sp3"))
+        }
+        if (config.isString("map." + game.getName() + ".sp3")) {
             sp3 = SerializableLocation.stringToLocation(config.getString("map." + game.getName() + ".sp3"));
-        else
+        } else {
             sp3 = null;
-        if (config.isString("map." + game.getName() + ".sp4"))
+        }
+        if (config.isString("map." + game.getName() + ".sp4")) {
             sp4 = SerializableLocation.stringToLocation(config.getString("map." + game.getName() + ".sp4"));
-        else
+        } else {
             sp4 = null;
-        if (config.isString("map." + game.getName() + ".lobby-sign"))
+        }
+        if (config.isString("map." + game.getName() + ".lobby-sign")) {
             lobbySign = SerializableLocation.stringToLocation(config.getString("map." + game.getName() + ".lobby-sign"));
-        else
+        } else {
             lobbySign = null;
-        if (config.isString("map." + game.getName() + ".class-lobby"))
+        }
+        if (config.isString("map." + game.getName() + ".class-lobby")) {
             classLobby = SerializableLocation.stringToLocation(config.getString("map." + game.getName() + ".class-lobby"));
-        else
+        } else {
             classLobby = null;
+        }
     }
 
     public void save() {
         Configuration config = plugin.getConfig();
-        if (sp1 != null)
+        if (sp1 != null) {
             config.set("map." + game.getName() + ".sp1", SerializableLocation.locationToString(sp1));
-        else
+        } else {
             config.set("map." + game.getName() + ".sp1", null);
-        if (sp2 != null)
+        }
+        if (sp2 != null) {
             config.set("map." + game.getName() + ".sp2", SerializableLocation.locationToString(sp2));
-        else
+        } else {
             config.set("map." + game.getName() + ".sp2", null);
-        if (sp3 != null)
+        }
+        if (sp3 != null) {
             config.set("map." + game.getName() + ".sp3", SerializableLocation.locationToString(sp3));
-        else
+        } else {
             config.set("map." + game.getName() + ".sp3", null);
-        if (sp4 != null)
+        }
+        if (sp4 != null) {
             config.set("map." + game.getName() + ".sp4", SerializableLocation.locationToString(sp4));
-        else
+        } else {
             config.set("map." + game.getName() + ".sp4", null);
-        if (lobbySign != null)
+        }
+        if (lobbySign != null) {
             config.set("map." + game.getName() + ".lobby-sign", SerializableLocation.locationToString(lobbySign));
-        else
+        } else {
             config.set("map." + game.getName() + ".lobby-sign", null);
-        if (classLobby != null)
+        }
+        if (classLobby != null) {
             config.set("map." + game.getName() + ".class-lobby", SerializableLocation.locationToString(classLobby));
-        else
+        } else {
             config.set("map." + game.getName() + ".class-lobby", null);
+        }
         plugin.saveConfig();
     }
 
