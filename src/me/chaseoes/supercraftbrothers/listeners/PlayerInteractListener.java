@@ -24,7 +24,7 @@ public class PlayerInteractListener implements Listener {
 
             if (s.getLine(0).equalsIgnoreCase("SuperCraftBros")) {
                 String mapName = ChatColor.stripColor(s.getLine(1));
-                SCBGameManager.getInstance().getGame(mapName).joinGame(event.getPlayer());
+                SCBGameManager.getInstance().getGame(mapName).joinLobby(event.getPlayer());
             }
         }
 
