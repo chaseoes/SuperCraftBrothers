@@ -1,6 +1,7 @@
 package me.chaseoes.supercraftbrothers.listeners;
 
 import me.chaseoes.supercraftbrothers.SCBGame;
+import me.chaseoes.supercraftbrothers.SCBGameManager;
 import me.chaseoes.supercraftbrothers.SCBMap;
 import me.chaseoes.supercraftbrothers.SuperCraftBrothers;
 
@@ -19,7 +20,7 @@ public class SignChangeListener implements Listener {
             if (player.hasPermission("scb.create")) {
                 if (event.getLine(2).equalsIgnoreCase("")) {
                     String map = event.getLine(1);
-                    SCBMap m = new SCBMap(new SCBGame(), SuperCraftBrothers.getInstance());
+                    SCBMap m = SCBGameManager.getInstance().getGame(map).getMap();
                     m.setLobbySign(event.getBlock().getLocation());
                     player.sendMessage(ChatColor.DARK_GREEN + "Successfully created HUB sign for the map " + m.getGame().getName() + ".");
                 }

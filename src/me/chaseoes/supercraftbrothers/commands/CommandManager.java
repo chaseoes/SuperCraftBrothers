@@ -23,7 +23,7 @@ public class CommandManager implements CommandExecutor {
                 if (SCBGameManager.getInstance().getGame(mapName) != null) {
                     cs.sendMessage("Map already exists");
                 } else {
-                    //TODO: Call central Game / Map storage from SCB.getInst() to create it in config
+                    SCBGameManager.getInstance().createGame(mapName);
                     cs.sendMessage("Created map " + mapName);
                 }
             } else {
@@ -38,7 +38,7 @@ public class CommandManager implements CommandExecutor {
                 if (SCBGameManager.getInstance().getGame(mapName) == null) {
                     cs.sendMessage("Map doesn't exist");
                 } else {
-                    //TODO: Call central Game / Map storage from SCB.getInst() to unload and delete
+                    SCBGameManager.getInstance().deleteGame(mapName);
                     cs.sendMessage("Deleted map " + mapName);
                 }
             } else {
@@ -56,13 +56,13 @@ public class CommandManager implements CommandExecutor {
                     if (strings[1].equalsIgnoreCase("lobby")) {
                         if (strings.length > 2) {
                             String mapName = strings[2];
-                            //SCBMap map = SCBGameManager.getInstance().getGame(mapName);
-                            //if (map == null) {
-                            //    cs.sendMessage("Map doesn't exist");
-                            //} else {
-                            //map.setClassLobby(player.getLocation());
-                            cs.sendMessage("Set the lobby of " + mapName);
-                            //}
+                            SCBMap map = SCBGameManager.getInstance().getGame(mapName).getMap();
+                            if (map == null) {
+                                cs.sendMessage("Map doesn't exist");
+                            } else {
+                                map.setClassLobby(player.getLocation());
+                                cs.sendMessage("Set the lobby of " + mapName);
+                            }
                         } else {
                             cs.sendMessage("Usage: /scb set lobby <map name>");
                         }
@@ -80,28 +80,27 @@ public class CommandManager implements CommandExecutor {
                             }
                             if (i > 0 && i < 5) {
                                 String mapName = strings[2];
-                                SCBMap map = null; //TODO: Getting map from w/e storage its called
-                                //SCBMap map = SCBGameManager.getInstance().getGame(mapName);
-                                //if (map == null) {
-                                //    cs.sendMessage("Map doesn't exist");
-                                //} else {
-                                switch (i) {
-                                    case 1:
-                                        map.setSp1(player.getLocation());
-                                        break;
-                                    case 2:
-                                        map.setSp2(player.getLocation());
-                                        break;
-                                    case 3:
-                                        map.setSp3(player.getLocation());
-                                        break;
-                                    case 4:
-                                        map.setSp4(player.getLocation());
-                                        break;
-                                    default:
-                                        cs.sendMessage("YOU BORKED THE RULES");
+                                SCBMap map = SCBGameManager.getInstance().getGame(mapName).getMap();
+                                if (map == null) {
+                                    cs.sendMessage("Map doesn't exist");
+                                } else {
+                                    switch (i) {
+                                        case 1:
+                                            map.setSp1(player.getLocation());
+                                            break;
+                                        case 2:
+                                            map.setSp2(player.getLocation());
+                                            break;
+                                        case 3:
+                                            map.setSp3(player.getLocation());
+                                            break;
+                                        case 4:
+                                            map.setSp4(player.getLocation());
+                                            break;
+                                        default:
+                                            cs.sendMessage("YOU BORKED THE RULES");
+                                    }
                                 }
-                                //}
                             } else {
                                 cs.sendMessage(i + " is not between 1 and 4");
                             }

@@ -7,11 +7,11 @@ public class HUBSigns {
     
     public static void update() {
         for (SCBGame game : SCBGameManager.getInstance().getAllGames()) {
-            Sign s = (Sign) new SCBMap(game, SuperCraftBrothers.getInstance()).getLobbySign().getBlock().getState();
+            Sign s = (Sign) game.getMap().getLobbySign().getBlock().getState();
             s.setLine(0, "SuperCraftBros");
-            s.setLine(0, "Click to Join");
-            s.setLine(0, ChatColor.BOLD + game.getName());
-            s.setLine(0, "Players: " + game.getNumberIngame() + "/4");
+            s.setLine(1, "Click to Join");
+            s.setLine(2, ChatColor.BOLD + game.getName());
+            s.setLine(3, "Players: " + game.getNumberIngame() + "/4");
         }
     }
     

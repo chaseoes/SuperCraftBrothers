@@ -6,16 +6,23 @@ import java.util.Set;
 public class SCBGame {
 
     private String name;
+    private SCBMap map;
     private final SuperCraftBrothers plugin;
     private final Set<CraftBrother> ingame = new HashSet<CraftBrother>();
 
     public SCBGame(SuperCraftBrothers plugin, String name) {
         this.plugin = plugin;
         this.name = name;
+        map = new SCBMap(this, plugin);
+        map.load();
     }
 
     public String getName() {
         return name;
+    }
+
+    public SCBMap getMap() {
+        return map;
     }
 
     public void joinLobby(CraftBrother bro) {
