@@ -2,7 +2,9 @@ package me.chaseoes.supercraftbrothers;
 
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 public class SCBGameManager {
 
@@ -60,6 +62,10 @@ public class SCBGameManager {
         if (games.containsKey(game.toLowerCase())) {
             games.remove(game.toLowerCase());
         }
+    }
+
+    public Collection<SCBGame> getAllGames() {
+        return games.values();
     }
 
 }
