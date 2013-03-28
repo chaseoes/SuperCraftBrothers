@@ -6,9 +6,15 @@ import java.util.HashMap;
 
 public class SCBGameManager {
 
+    private static final SCBGameManager instance = new SCBGameManager();
     private HashMap<String, SCBGame> games = new HashMap<String, SCBGame>();
     private HashMap<String, CraftBrother> bros = new HashMap<String, CraftBrother>();
 
+    private SCBGameManager() { }
+
+    public static SCBGameManager getInstance() {
+        return instance;
+    }
 
     public CraftBrother getCraftBrother(Player player) {
         if (player == null) return null;
