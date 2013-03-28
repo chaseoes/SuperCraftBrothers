@@ -1,5 +1,7 @@
 package me.chaseoes.supercraftbrothers;
 
+import me.chaseoes.supercraftbrothers.classes.SCBClass;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -10,6 +12,8 @@ public class CraftBrother {
     private int kills;
     private boolean isInLobby;
     private CraftBrother lastDamagedBy;
+    private String currentClass;
+    private SCBGame currentGame;
     
     public CraftBrother(String name) {
         name = this.name;
@@ -53,16 +57,20 @@ public class CraftBrother {
         return isInLobby;
     }
     
-    public void getCurrentGame() {
-        
+    public SCBGame getCurrentGame() {
+        return currentGame;
     }
     
-    public void getCurrentClass() {
-        
+    public void setCurrentGame(SCBGame game) {
+        currentGame = game;
     }
     
-    public void setCurrentClass() {
-        
+    public String getCurrentClass() {
+        return currentClass;
+    }
+    
+    public void setCurrentClass(SCBClass c) {
+        currentClass = c.getName();
     }
 
     public CraftBrother getLastDamagedBy() {
