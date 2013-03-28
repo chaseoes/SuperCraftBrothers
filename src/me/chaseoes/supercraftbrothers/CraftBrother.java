@@ -12,9 +12,9 @@ public class CraftBrother {
     private int kills;
     private boolean isInLobby;
     private CraftBrother lastDamagedBy;
-    private String currentClass;
     private SCBGame currentGame;
-    
+    private String currentClass;
+
     public CraftBrother(String name) {
         name = this.name;
         lives = 4;

@@ -1,14 +1,16 @@
 package me.chaseoes.supercraftbrothers;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.bukkit.entity.Player;
+
+import java.util.Collection;
+import java.util.HashMap;
 
 public class SCBGame {
 
     private String name;
     private SCBMap map;
     private final SuperCraftBrothers plugin;
-    private final Set<CraftBrother> ingame = new HashSet<CraftBrother>();
+    private final HashMap<String, CraftBrother> ingame = new HashMap<String, CraftBrother>();
     // !inLobby implies inGame
     private boolean inLobby = true;
 
@@ -27,20 +29,22 @@ public class SCBGame {
         return map;
     }
 
-    public void joinLobby(CraftBrother bro) {
-        if (ingame.contains(bro))
+    public void joinLobby(Player bro) {
+        if (ingame.containsKey(bro.getName().toLowerCase()))
             return;
         if (getNumberIngame() > 3)
             throw new RuntimeException("SOMEONE BROKE SOMETHING JOINING GAMES");
-        ingame.add(bro);
-        bro.getPlayer().teleport(map.getClassLobby());
+        CraftBrother cBro = SCBGameManager.getInstance().addCraftBrother(bro.getName());
+        ingame.put(bro.getName().toLowerCase(), cBro).setCurrentGame(this);
+        bro.teleport(map.getClassLobby());
     }
 
     public void leaveLobby(CraftBrother bro) {
-        if (!ingame.contains(bro))
+        if (!ingame.containsValue(bro))
             return;
         ingame.remove(bro);
         bro.getPlayer().teleport(SCBGameManager.getInstance().getMainLobby());
+        SCBGameManager.getInstance().removeCraftBrother(bro.getPlayer().getName());
     }
 
     public void joinGame(CraftBrother bro) {
@@ -55,8 +59,12 @@ public class SCBGame {
         return ingame.size();
     }
 
+    public Collection<CraftBrother> getIngame() {
+        return ingame.values();
+    }
+
     public void broadcast(String message) {
-        for (CraftBrother bro : ingame) {
+        for (CraftBrother bro : ingame.values()) {
             bro.getPlayer().sendMessage(message);
         }
     }
@@ -71,5 +79,13 @@ public class SCBGame {
 
     public void setInLobby(boolean b) {
         inLobby = b;
+    }
+
+    public int getAlive() {
+        return getNumberIngame();
+    }
+
+    public int getDead() {
+        return 4 - getNumberIngame();
     }
 }

@@ -78,14 +78,23 @@ public class SCBGameManager {
         if (bros.containsKey(player.toLowerCase())) {
             return bros.get(player.toLowerCase());
         }
+        return null;
+    }
+
+    public CraftBrother addCraftBrother(String player) {
         return bros.put(player.toLowerCase(), new CraftBrother(player));
     }
 
-    public void playerLogout(String player) {
+    public void removeCraftBrother(String player) {
         if (player == null) return;
         if (bros.containsKey(player.toLowerCase())) {
             bros.remove(player.toLowerCase());
         }
+    }
+
+    //True if the player can be found in a SCBGame object
+    public boolean isInGame(String player) {
+        return bros.containsKey(player.toLowerCase());
     }
 
     public SCBGame getGame(String game) {
