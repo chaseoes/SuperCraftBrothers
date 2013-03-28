@@ -36,7 +36,7 @@ public class SCBClass {
             return false;
         }
 
-        if (player.isIngame()) {
+        if (!player.isInLobby()) {
             try {
 
                 // Clear their inventory.
