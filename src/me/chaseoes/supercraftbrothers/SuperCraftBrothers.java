@@ -27,10 +27,18 @@ public class SuperCraftBrothers extends JavaPlugin {
         pm.registerEvents(new PlayerDamageListener(), this);
         pm.registerEvents(new PlayerInteractListener(), this);
         pm.registerEvents(new SignChangeListener(), this);
+        
+        // HUB Signs
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            public void run() {
+                HUBSigns.update();
+            }
+        }, 0L, 20L);
     }
     
     public void onDisable() {
         instance = null;
+        getServer().getScheduler().cancelTasks(this);
         
         //Probably make this the last method, maybe even sync / lock it to lock this thread until all mysql stuff is through
         Mysql.getInstance().close();
