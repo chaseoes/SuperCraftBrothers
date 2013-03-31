@@ -11,7 +11,7 @@ public class CraftBrother {
     private int lives;
     private int kills;
     private boolean isInLobby;
-    private CraftBrother lastDamagedBy;
+    private String lastDamagedBy;
     private SCBGame currentGame;
     private String currentClass;
 
@@ -45,7 +45,7 @@ public class CraftBrother {
         if (i != -1) {
             kills = i;
         } else {
-            kills--;
+            kills++;
         }
     }
 
@@ -73,11 +73,11 @@ public class CraftBrother {
         currentClass = c.getName();
     }
 
-    public CraftBrother getLastDamagedBy() {
+    public String getLastDamagedBy() {
         return lastDamagedBy;
     }
 
-    public void setLastDamagedBy(CraftBrother lastDamagedBy) {
+    public void setLastDamagedBy(String lastDamagedBy) {
         this.lastDamagedBy = lastDamagedBy;
     }
 }
