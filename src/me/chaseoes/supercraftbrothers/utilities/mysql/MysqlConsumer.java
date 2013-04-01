@@ -2,31 +2,31 @@ package me.chaseoes.supercraftbrothers.utilities.mysql;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class MySQLConsumer implements Runnable {
+public class MysqlConsumer implements Runnable {
 
-    private static final MySQLConsumer instance = new MySQLConsumer();
-    private ConcurrentLinkedQueue<MySQLUpdateRequest> dataQueue = new ConcurrentLinkedQueue<MySQLUpdateRequest>();
-    private MySQL mysql;
+    private static final MysqlConsumer instance = new MysqlConsumer();
+    private ConcurrentLinkedQueue<MysqlUpdateRequest> dataQueue = new ConcurrentLinkedQueue<MysqlUpdateRequest>();
+    private Mysql mysql;
 
-    private MySQLConsumer() {
+    private MysqlConsumer() {
     }
 
-    public void setup(MySQL mysql) {
+    public void setup(Mysql mysql) {
         this.mysql = mysql;
     }
 
-    public static MySQLConsumer getInstance() {
+    public static MysqlConsumer getInstance() {
         return instance;
     }
 
-    public void addRequest(MySQLUpdateRequest req) {
+    public void addRequest(MysqlUpdateRequest req) {
         dataQueue.add(req);
     }
 
     @Override
     public void run() {
         StringBuilder builder = new StringBuilder();
-        MySQLUpdateRequest req;
+        MysqlUpdateRequest req;
         while ((req = dataQueue.poll()) != null) {
             builder.append("UPDATE players SET ").append(req.getCause().getColName()).append("='").append(req.getVal()).append("' WHERE username='").append(req.getName()).append("';");
             mysql.execUpdate(builder.toString());
