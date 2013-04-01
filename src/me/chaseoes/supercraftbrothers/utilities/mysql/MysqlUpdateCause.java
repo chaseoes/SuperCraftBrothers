@@ -1,13 +1,13 @@
 package me.chaseoes.supercraftbrothers.utilities.mysql;
 
-public final class MysqlUpdateCause {
+public final class MySQLUpdateCause {
 
     // Constants that declare changeable row names
-    public static final MysqlUpdateCause MONEY = new MysqlUpdateCause("money");
+    public static final MySQLUpdateCause MONEY = new MySQLUpdateCause("money");
 
     private String colName;
 
-    private MysqlUpdateCause(String colName) {
+    private MySQLUpdateCause(String colName) {
         this.colName = colName;
     }
 

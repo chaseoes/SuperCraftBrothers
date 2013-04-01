@@ -3,7 +3,7 @@ package me.chaseoes.supercraftbrothers;
 import me.chaseoes.supercraftbrothers.listeners.PlayerDamageListener;
 import me.chaseoes.supercraftbrothers.listeners.PlayerInteractListener;
 import me.chaseoes.supercraftbrothers.listeners.SignChangeListener;
-import me.chaseoes.supercraftbrothers.utilities.mysql.Mysql;
+import me.chaseoes.supercraftbrothers.utilities.mysql.MySQL;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -23,7 +23,7 @@ public class SuperCraftBrothers extends JavaPlugin {
         instance = this;
         getConfig().options().copyDefaults(true);
         saveConfig();
-        Mysql.getInstance().setup(this);
+        MySQL.getInstance().setup(this);
 
         // Listener Registration
         PluginManager pm = getServer().getPluginManager();
@@ -52,7 +52,7 @@ public class SuperCraftBrothers extends JavaPlugin {
 
         // Probably make this the last method, maybe even sync / lock it to lock
         // this thread until all mysql stuff is through
-        Mysql.getInstance().close();
+        MySQL.getInstance().close();
     }
 
 }
