@@ -7,6 +7,9 @@ public class HUBSigns {
 
     public static void update() {
         for (SCBGame game : SCBGameManager.getInstance().getAllGames()) {
+            if (game.getMap().getLobbySign() == null) {
+                continue;
+            }
             Sign s = (Sign) game.getMap().getLobbySign().getBlock().getState();
             if (game.isInLobby()) {
                 s.setLine(0, "SuperCraftBros");
@@ -19,6 +22,7 @@ public class HUBSigns {
                 s.setLine(2, "Players Alive: " + game.getAlive());
                 s.setLine(3, "Players Dead: " + game.getDead());
             }
+            s.update();
         }
     }
 

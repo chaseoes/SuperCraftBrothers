@@ -1,9 +1,11 @@
 package me.chaseoes.supercraftbrothers;
 
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 
+import me.chaseoes.supercraftbrothers.classes.SCBClass;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class SCBGame {
@@ -35,14 +37,20 @@ public class SCBGame {
             return;
         }
         if (getNumberIngame() > 3) {
-            throw new RuntimeException("SOMEONE BROKE SOMETHING JOINING GAMES");
+            bro.sendMessage(ChatColor.RED + getName() + " is full!");
+            return;
         }
-        CraftBrother cBro = SCBGameManager.getInstance().addCraftBrother(bro.getName());
+        if (isInGame()) {
+            bro.sendMessage(ChatColor.RED + getName() + " is currently running!");
+            return;
+        }
+        SCBGameManager.getInstance().addCraftBrother(bro.getName());
+        CraftBrother cBro = SCBGameManager.getInstance().getCraftBrother(bro.getName());
         cBro.setInLobby(true);
         cBro.setCurrentGame(this);
         ingame.put(bro.getName().toLowerCase(), cBro);
         bro.teleport(map.getClassLobby());
-        bro.sendMessage("You have joined " + getName() + ", select a class to continue.");
+        bro.sendMessage(ChatColor.DARK_GREEN + "You have joined " + getName() + ", select a class to continue.");
         if (getNumberIngame() == 4) {
             Schedulers.getInstance().startLobbyCountdown(this);
         }
@@ -54,7 +62,7 @@ public class SCBGame {
         }
         ingame.remove(bro.getName().toLowerCase());
         bro.teleport(SCBGameManager.getInstance().getMainLobby());
-        bro.sendMessage("You left the lobby");
+        bro.sendMessage(ChatColor.DARK_AQUA + "You left the lobby");
         SCBGameManager.getInstance().removeCraftBrother(bro.getPlayer().getName());
     }
 
@@ -69,7 +77,7 @@ public class SCBGame {
         }
         ingame.remove(bro.getName().toLowerCase());
         bro.teleport(SCBGameManager.getInstance().getMainLobby());
-        bro.sendMessage("You left the game");
+        bro.sendMessage(ChatColor.DARK_AQUA + "You left the game");
         SCBGameManager.getInstance().removeCraftBrother(bro.getName());
         checkWin();
     }
@@ -80,8 +88,25 @@ public class SCBGame {
         }
     }
 
+    public void startGame() {
+        List<Location> spawns = Arrays.asList(map.getSp1(), map.getSp2(), map.getSp3(), map.getSp4());
+        List<CraftBrother> bros = new ArrayList<CraftBrother>(ingame.values());
+        for (int i = 0; i < bros.size(); i++) {
+            bros.get(i).getPlayer().teleport(spawns.get(i));
+        }
+        for (CraftBrother bro : bros) {
+            if (bro.getCurrentClass() == null) {
+                //TODO: random class selection or kicking, whichever works
+            }
+            new SCBClass(bro.getCurrentClass()).apply(bro);
+            bro.getPlayer().sendMessage(ChatColor.DARK_AQUA + "Round started on" + getName());
+        }
+        //TODO: Scoreboard initialization stuff when it comes out
+
+    }
+
     public void winGame(CraftBrother bro) {
-        Bukkit.broadcastMessage(bro.getPlayer().getName() + " has won on " + getName());
+        Bukkit.broadcastMessage(ChatColor.DARK_AQUA + bro.getPlayer().getName() + " has won on " + getName());
         bro.getPlayer().teleport(SCBGameManager.getInstance().getMainLobby());
         SCBGameManager.getInstance().removeCraftBrother(bro.getPlayer().getName());
         ingame.clear();
@@ -120,5 +145,14 @@ public class SCBGame {
 
     public int getDead() {
         return 4 - getNumberIngame();
+    }
+
+    public void playerEliminated(CraftBrother killed) {
+        if (ingame.containsKey(killed.getPlayer().getName().toLowerCase())) {
+            broadcast(ChatColor.DARK_AQUA + killed.getPlayer().getName() + " was eliminated from the game");
+            ingame.remove(killed.getPlayer().getName().toLowerCase());
+            checkWin();
+        }
+
     }
 }

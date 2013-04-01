@@ -26,6 +26,7 @@ public class SCBGameManager {
 
     public void setup(SuperCraftBrothers plugin) {
         this.plugin = plugin;
+        load();
     }
 
     public void load() {

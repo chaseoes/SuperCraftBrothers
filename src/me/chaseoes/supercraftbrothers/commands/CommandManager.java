@@ -3,6 +3,7 @@ package me.chaseoes.supercraftbrothers.commands;
 import me.chaseoes.supercraftbrothers.SCBGameManager;
 import me.chaseoes.supercraftbrothers.SCBMap;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -57,6 +58,10 @@ public class CommandManager implements CommandExecutor {
                     if (strings[1].equalsIgnoreCase("lobby")) {
                         if (strings.length > 2) {
                             String mapName = strings[2];
+                            if (SCBGameManager.getInstance().getGame(mapName) == null) {
+                                cs.sendMessage(ChatColor.RED + "Map doesn't exist");
+                                return true;
+                            }
                             SCBMap map = SCBGameManager.getInstance().getGame(mapName).getMap();
                             if (map == null) {
                                 cs.sendMessage("Map doesn't exist");
@@ -81,6 +86,10 @@ public class CommandManager implements CommandExecutor {
                             }
                             if (i > 0 && i < 5) {
                                 String mapName = strings[2];
+                                if (SCBGameManager.getInstance().getGame(mapName) == null) {
+                                    cs.sendMessage(ChatColor.RED + "Map doesn't exist");
+                                    return true;
+                                }
                                 SCBMap map = SCBGameManager.getInstance().getGame(mapName).getMap();
                                 if (map == null) {
                                     cs.sendMessage("Map doesn't exist");
@@ -102,6 +111,7 @@ public class CommandManager implements CommandExecutor {
                                             cs.sendMessage("YOU BORKED THE RULES");
                                     }
                                 }
+                                cs.sendMessage("Created spawnpoint " + i + " for map " + mapName);
                             } else {
                                 cs.sendMessage(i + " is not between 1 and 4");
                             }

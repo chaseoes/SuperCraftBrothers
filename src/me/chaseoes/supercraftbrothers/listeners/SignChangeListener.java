@@ -18,6 +18,8 @@ public class SignChangeListener implements Listener {
             if (player.hasPermission("scb.create")) {
                 if (event.getLine(2).equalsIgnoreCase("")) {
                     String map = event.getLine(1);
+                    if (SCBGameManager.getInstance().getGame(map) == null)
+                        return;
                     SCBMap m = SCBGameManager.getInstance().getGame(map).getMap();
                     m.setLobbySign(event.getBlock().getLocation());
                     player.sendMessage(ChatColor.DARK_GREEN + "Successfully created HUB sign for the map " + m.getGame().getName() + ".");

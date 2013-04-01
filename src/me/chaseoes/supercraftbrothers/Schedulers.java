@@ -38,6 +38,7 @@ public class Schedulers {
                     }
                     i--;
                 } else {
+                    game.startGame();
                     stopLobbyCountdown(game);
                 }
             }
