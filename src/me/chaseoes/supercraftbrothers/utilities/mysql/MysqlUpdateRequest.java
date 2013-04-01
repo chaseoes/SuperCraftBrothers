@@ -1,12 +1,12 @@
 package me.chaseoes.supercraftbrothers.utilities.mysql;
 
-public class MySQLUpdateRequest {
+public class MysqlUpdateRequest {
 
     private final String name;
-    private final MySQLUpdateCause cause;
+    private final MysqlUpdateCause cause;
     private final Object val;
 
-    public MySQLUpdateRequest(String name, MySQLUpdateCause cause, Object val) {
+    public MysqlUpdateRequest(String name, MysqlUpdateCause cause, Object val) {
         this.name = name;
         this.cause = cause;
         this.val = val;
@@ -16,7 +16,7 @@ public class MySQLUpdateRequest {
         return name;
     }
 
-    public MySQLUpdateCause getCause() {
+    public MysqlUpdateCause getCause() {
         return cause;
     }
 

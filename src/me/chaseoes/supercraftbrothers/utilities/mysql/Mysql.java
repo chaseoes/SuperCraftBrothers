@@ -12,16 +12,16 @@ import me.chaseoes.supercraftbrothers.SuperCraftBrothers;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
-public class MySQL {
+public class Mysql {
 
-    private static final MySQL instance = new MySQL();
+    private static final Mysql instance = new Mysql();
     private SuperCraftBrothers plugin;
     private Connection conn;
     private boolean connected = false;
     private BukkitTask consumerTask;
     private BukkitTask connTask;
 
-    public static MySQL getInstance() {
+    public static Mysql getInstance() {
         return instance;
     }
 
@@ -51,7 +51,7 @@ public class MySQL {
                     plugin.getServer().getPluginManager().disablePlugin(plugin);
                 }
                 if (connected) {
-                    consumerTask = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, MySQLConsumer.getInstance(), 1L, 5L);
+                    consumerTask = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, MysqlConsumer.getInstance(), 1L, 5L);
                 }
             }
         });
