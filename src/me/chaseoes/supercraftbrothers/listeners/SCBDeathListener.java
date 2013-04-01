@@ -4,10 +4,12 @@ import me.chaseoes.supercraftbrothers.CraftBrother;
 import me.chaseoes.supercraftbrothers.SCBGame;
 import me.chaseoes.supercraftbrothers.events.SCBDeathEvent;
 import org.bukkit.ChatColor;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class SCBDeathListener implements Listener {
 
+    @EventHandler
     public void onSCBDeath(SCBDeathEvent event) {
         SCBGame game = event.getGame();
         CraftBrother killed = event.getKilled();

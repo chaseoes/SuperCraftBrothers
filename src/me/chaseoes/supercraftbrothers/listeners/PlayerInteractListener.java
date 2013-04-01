@@ -7,12 +7,14 @@ import me.chaseoes.supercraftbrothers.classes.SCBClass;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class PlayerInteractListener implements Listener {
 
+    @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.hasBlock() && event.getClickedBlock().getType() == Material.WALL_SIGN) {
             Sign s = (Sign) event.getClickedBlock().getState();
@@ -23,7 +25,7 @@ public class PlayerInteractListener implements Listener {
             }
 
             if (s.getLine(0).equalsIgnoreCase("SuperCraftBros")) {
-                String mapName = ChatColor.stripColor(s.getLine(1));
+                String mapName = ChatColor.stripColor(s.getLine(2));
                 SCBGameManager.getInstance().getGame(mapName).joinLobby(event.getPlayer());
             }
         }

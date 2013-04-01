@@ -68,6 +68,8 @@ public class Mysql {
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NullPointerException ex) {
+
         }
     }
 

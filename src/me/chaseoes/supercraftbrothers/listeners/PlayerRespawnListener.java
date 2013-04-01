@@ -4,6 +4,7 @@ import me.chaseoes.supercraftbrothers.CraftBrother;
 import me.chaseoes.supercraftbrothers.SCBGameManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
@@ -13,6 +14,7 @@ public class PlayerRespawnListener implements Listener {
 
     private Random rand = new Random();
 
+    @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         if (SCBGameManager.getInstance().isInGame(event.getPlayer().getName())) {
             CraftBrother bro = SCBGameManager.getInstance().getCraftBrother(event.getPlayer());

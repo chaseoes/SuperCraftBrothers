@@ -44,7 +44,8 @@ public class SCBGame {
             bro.sendMessage(ChatColor.RED + getName() + " is currently running!");
             return;
         }
-        CraftBrother cBro = SCBGameManager.getInstance().addCraftBrother(bro.getName());
+        SCBGameManager.getInstance().addCraftBrother(bro.getName());
+        CraftBrother cBro = SCBGameManager.getInstance().getCraftBrother(bro.getName());
         cBro.setInLobby(true);
         cBro.setCurrentGame(this);
         ingame.put(bro.getName().toLowerCase(), cBro);

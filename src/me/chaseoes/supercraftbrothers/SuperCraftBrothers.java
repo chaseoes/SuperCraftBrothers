@@ -1,12 +1,9 @@
 package me.chaseoes.supercraftbrothers;
 
-import me.chaseoes.supercraftbrothers.listeners.PlayerDamageListener;
-import me.chaseoes.supercraftbrothers.listeners.PlayerInteractListener;
-import me.chaseoes.supercraftbrothers.listeners.SignChangeListener;
+import me.chaseoes.supercraftbrothers.commands.CommandManager;
+import me.chaseoes.supercraftbrothers.listeners.*;
 import me.chaseoes.supercraftbrothers.utilities.mysql.Mysql;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,13 +20,19 @@ public class SuperCraftBrothers extends JavaPlugin {
         instance = this;
         getConfig().options().copyDefaults(true);
         saveConfig();
-        Mysql.getInstance().setup(this);
+        //TODO: Uncomment after testing
+        //Mysql.getInstance().setup(this);
+        SCBGameManager.getInstance().setup(this);
 
         // Listener Registration
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new PlayerDamageListener(), this);
         pm.registerEvents(new PlayerInteractListener(), this);
         pm.registerEvents(new SignChangeListener(), this);
+        pm.registerEvents(new PlayerDeathListener(), this);
+        pm.registerEvents(new PlayerRespawnListener(), this);
+        pm.registerEvents(new PlayerQuitListener(), this);
+        pm.registerEvents(new SCBDeathListener(), this);
 
         // HUB Signs
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
@@ -39,10 +42,7 @@ public class SuperCraftBrothers extends JavaPlugin {
             }
         }, 0L, 20L);
 
-        // Reloads happen
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            SCBGameManager.getInstance().getCraftBrother(player.getName());
-        }
+        getCommand("scbb").setExecutor(new CommandManager());
     }
 
     @Override
