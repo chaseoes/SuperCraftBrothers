@@ -23,6 +23,7 @@ public class SuperCraftBrothers extends JavaPlugin {
         //TODO: Uncomment after testing
         //Mysql.getInstance().setup(this);
         SCBGameManager.getInstance().setup(this);
+        Schedulers.getInstance().setup(this);
 
         // Listener Registration
         PluginManager pm = getServer().getPluginManager();

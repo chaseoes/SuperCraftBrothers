@@ -38,6 +38,9 @@ public class PlayerRespawnListener implements Listener {
                 event.setRespawnLocation(resp);
                 event.getPlayer().sendMessage(ChatColor.DARK_BLUE + "You have " + bro.getLivesLeft() + " live" + (bro.getLivesLeft() == 1 ? "left" : "s left"));
             }
+        } else if (SCBGameManager.getInstance().isSpawningToLobby(event.getPlayer().getName())) {
+            event.setRespawnLocation(SCBGameManager.getInstance().getMainLobby());
+            SCBGameManager.getInstance().removeSpawningToLobby(event.getPlayer().getName());
         }
     }
 }

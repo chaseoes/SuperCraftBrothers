@@ -10,6 +10,10 @@ public class HUBSigns {
             if (game.getMap().getLobbySign() == null) {
                 continue;
             }
+            if (!(game.getMap().getLobbySign().getBlock().getState() instanceof Sign)) {
+                SuperCraftBrothers.getInstance().getLogger().info("Block for game " + game.getName() + " is not a sign");
+                continue;
+            }
             Sign s = (Sign) game.getMap().getLobbySign().getBlock().getState();
             if (game.isInLobby()) {
                 s.setLine(0, "SuperCraftBros");

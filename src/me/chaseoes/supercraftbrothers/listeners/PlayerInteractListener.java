@@ -1,9 +1,8 @@
 package me.chaseoes.supercraftbrothers.listeners;
 
-import me.chaseoes.supercraftbrothers.SCBGame;
+import me.chaseoes.supercraftbrothers.CraftBrother;
 import me.chaseoes.supercraftbrothers.SCBGameManager;
 import me.chaseoes.supercraftbrothers.classes.SCBClass;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
@@ -21,17 +20,16 @@ public class PlayerInteractListener implements Listener {
             if (s.getLine(0).equalsIgnoreCase("") && !s.getLine(1).equalsIgnoreCase("") && s.getLine(2).equalsIgnoreCase("") && s.getLine(3).equalsIgnoreCase("")) {
                 String className = ChatColor.stripColor(s.getLine(1));
                 SCBClass sc = new SCBClass(className);
-                sc.apply(SCBGameManager.getInstance().getCraftBrother(event.getPlayer()));
+                CraftBrother bro = SCBGameManager.getInstance().getCraftBrother(event.getPlayer());
+                if (bro != null && bro.isInLobby()) {
+                    sc.apply(bro);
+                }
             }
 
             if (s.getLine(0).equalsIgnoreCase("SuperCraftBros")) {
                 String mapName = ChatColor.stripColor(s.getLine(2));
                 SCBGameManager.getInstance().getGame(mapName).joinLobby(event.getPlayer());
             }
-        }
-
-        for (SCBGame game : SCBGameManager.getInstance().getAllGames()) {
-
         }
     }
 

@@ -151,6 +151,7 @@ public class SCBGame {
         if (ingame.containsKey(killed.getPlayer().getName().toLowerCase())) {
             broadcast(ChatColor.DARK_AQUA + killed.getPlayer().getName() + " was eliminated from the game");
             ingame.remove(killed.getPlayer().getName().toLowerCase());
+            SCBGameManager.getInstance().addSpawningToLobby(killed.getPlayer().getName());
             checkWin();
         }
 

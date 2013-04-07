@@ -11,7 +11,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class PlayerDamageListener implements Listener {
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
@@ -25,9 +25,13 @@ public class PlayerDamageListener implements Listener {
                     EntityDamageByEntityEvent edbee = (EntityDamageByEntityEvent) event;
                     if (edbee.getDamager() instanceof Player) {
                         Player damager = (Player) edbee.getDamager();
-                        CraftBrother cbDamager = SCBGameManager.getInstance().getCraftBrother(damager.getName());
-                        if (cbDamager.getCurrentGame().getName().equalsIgnoreCase(game.getName()) && game.isInGame()) {
-                            bro.setLastDamagedBy(cbDamager.getPlayer().getName());
+                        if (SCBGameManager.getInstance().isInGame(damager.getName())) {
+                            CraftBrother cbDamager = SCBGameManager.getInstance().getCraftBrother(damager.getName());
+                            if (cbDamager.getCurrentGame().getName().equalsIgnoreCase(game.getName()) && game.isInGame()) {
+                                bro.setLastDamagedBy(cbDamager.getPlayer().getName());
+                            } else {
+                                event.setCancelled(true);
+                            }
                         } else {
                             event.setCancelled(true);
                         }

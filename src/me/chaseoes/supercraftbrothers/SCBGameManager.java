@@ -1,8 +1,6 @@
 package me.chaseoes.supercraftbrothers;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import me.chaseoes.supercraftbrothers.utilities.SerializableLocation;
 
@@ -16,6 +14,7 @@ public class SCBGameManager {
     private HashMap<String, CraftBrother> bros = new HashMap<String, CraftBrother>();
     private SuperCraftBrothers plugin;
     private Location mainLobby;
+    private List<String> spawnToLobby;
 
     private SCBGameManager() {
     }
@@ -41,6 +40,11 @@ public class SCBGameManager {
             mainLobby = SerializableLocation.stringToLocation(plugin.getConfig().getString("main-lobby"));
         } else {
             mainLobby = null;
+        }
+        if (plugin.getConfig().isList("respawning")) {
+            spawnToLobby = plugin.getConfig().getStringList("respawning");
+        } else {
+            spawnToLobby = new ArrayList<String>();
         }
     }
 
@@ -150,5 +154,21 @@ public class SCBGameManager {
         plugin.getConfig().set("main-lobby", SerializableLocation.locationToString(mainLobby));
         plugin.saveConfig();
         this.mainLobby = mainLobby;
+    }
+
+    public boolean isSpawningToLobby(String player) {
+        return spawnToLobby.contains(player);
+    }
+
+    public void addSpawningToLobby(String player) {
+        spawnToLobby.add(player);
+        plugin.getConfig().set("respawning", spawnToLobby);
+        plugin.saveConfig();
+    }
+
+    public void removeSpawningToLobby(String player) {
+        spawnToLobby.remove(player);
+        plugin.getConfig().set("respawning", spawnToLobby);
+        plugin.saveConfig();
     }
 }

@@ -1,6 +1,6 @@
 classes:
-  heavy:
-    zombie:
+  zombie:
+    armor:
       helmet: 306.PROTECTION_PROJECTILE-2
       chest: 307.PROTECTION_PROJECTILE-2
       legs: 308.PROTECTION_PROJECTILE-2

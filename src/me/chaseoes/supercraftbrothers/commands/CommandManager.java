@@ -119,6 +119,11 @@ public class CommandManager implements CommandExecutor {
                             cs.sendMessage("Usage: /scb set spawn <map name> <1|2|3|4>");
                         }
                     }
+
+                    if (strings[1].equalsIgnoreCase("mainlobby")) {
+                        SCBGameManager.getInstance().setMainLobby(player.getLocation());
+                        player.sendMessage("Set main lobby");
+                    }
                 } else {
                     cs.sendMessage("Usage: /scb set <lobby|spawn>");
                 }
