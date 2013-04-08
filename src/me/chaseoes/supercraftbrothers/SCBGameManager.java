@@ -79,7 +79,7 @@ public class SCBGameManager {
         if (player == null) {
             return null;
         }
-        return getCraftBrother(player.getName());
+        return getCraftBrother(player.getName().toLowerCase());
     }
 
     public CraftBrother getCraftBrother(String player) {

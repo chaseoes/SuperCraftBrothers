@@ -16,7 +16,8 @@ public class CraftBrother {
     private String currentClass;
 
     public CraftBrother(String name) {
-        name = this.name;
+        //name = this.name;    You kiddin me brah?
+        this.name = name;
         lives = 4;
         kills = 0;
     }
