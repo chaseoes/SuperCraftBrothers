@@ -34,6 +34,9 @@ public class SuperCraftBrothers extends JavaPlugin {
         pm.registerEvents(new PlayerRespawnListener(), this);
         pm.registerEvents(new PlayerQuitListener(), this);
         pm.registerEvents(new SCBDeathListener(), this);
+        pm.registerEvents(new EntityBowFireListener(), this);
+        pm.registerEvents(new PlayerDropItemListener(), this);
+        pm.registerEvents(new PlayerPickupItemListener(), this);
 
         // HUB Signs
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {

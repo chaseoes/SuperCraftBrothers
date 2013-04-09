@@ -30,6 +30,11 @@ public class PlayerInteractListener implements Listener {
                 String mapName = ChatColor.stripColor(s.getLine(2));
                 SCBGameManager.getInstance().getGame(mapName).joinLobby(event.getPlayer());
             }
+        } else if (SCBGameManager.getInstance().isInGame(event.getPlayer().getName())) {
+            CraftBrother bro = SCBGameManager.getInstance().getCraftBrother(event.getPlayer().getName());
+            if (bro.isInLobby()) {
+                event.setCancelled(true);
+            }
         }
     }
 
