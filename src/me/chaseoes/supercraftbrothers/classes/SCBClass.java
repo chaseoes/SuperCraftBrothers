@@ -149,7 +149,7 @@ public class SCBClass {
     }
 
     @SuppressWarnings("deprecation")
-    public void clearInventory(Player player) {
+    public static void clearInventory(Player player) {
         player.getInventory().clear();
         player.getInventory().setHelmet(new ItemStack(Material.AIR));
         player.getInventory().setChestplate(new ItemStack(Material.AIR));

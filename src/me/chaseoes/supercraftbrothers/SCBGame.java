@@ -50,6 +50,7 @@ public class SCBGame {
         cBro.setCurrentGame(this);
         ingame.put(bro.getName().toLowerCase(), cBro);
         bro.teleport(map.getClassLobby());
+        SCBClass.clearInventory(bro);
         bro.sendMessage(ChatColor.DARK_GREEN + "You have joined " + getName() + ", select a class to continue.");
         if (getNumberIngame() == 4) {
             Schedulers.getInstance().startLobbyCountdown(this);

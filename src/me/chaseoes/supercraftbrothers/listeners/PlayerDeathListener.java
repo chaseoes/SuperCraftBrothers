@@ -18,6 +18,8 @@ public class PlayerDeathListener implements Listener {
             CraftBrother bro2 = SCBGameManager.getInstance().getCraftBrother(bro1.getLastDamagedBy());
             Bukkit.getPluginManager().callEvent(new SCBDeathEvent(bro1, bro2, bro1.getCurrentGame()));
             bro1.setLastDamagedBy(null);
+            event.setDroppedExp(0);
+            event.getDrops().clear();
             //event.setDeathMessage(ChatColor.DARK_AQUA + event.getDeathMessage());
             //SuperCraftBrothers.getInstance().getServer().broadcastMessage(ChatColor.DARK_AQUA + event.getEntity().getName() + " has " + SCBGameManager.getInstance().getCraftBrother(event.getEntity()).getLivesLeft() + " lives left.");
         }
