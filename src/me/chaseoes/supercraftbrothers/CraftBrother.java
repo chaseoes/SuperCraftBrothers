@@ -14,6 +14,7 @@ public class CraftBrother {
     private String lastDamagedBy;
     private SCBGame currentGame;
     private String currentClass;
+    private boolean respawning;
 
     public CraftBrother(String name) {
         //name = this.name;    You kiddin me brah?
@@ -80,5 +81,13 @@ public class CraftBrother {
 
     public void setLastDamagedBy(String lastDamagedBy) {
         this.lastDamagedBy = lastDamagedBy;
+    }
+
+    public boolean isRespawning() {
+        return respawning;
+    }
+
+    public void setRespawning(boolean b) {
+        respawning = b;
     }
 }

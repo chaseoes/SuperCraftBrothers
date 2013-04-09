@@ -43,7 +43,7 @@ public class Schedulers {
                 }
             }
         }, 0L, 20L);
-
+        lobbyCountdowns.put(game.getName(), task.getTaskId());
     }
 
     public void stopLobbyCountdown(SCBGame game) {

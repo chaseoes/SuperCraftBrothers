@@ -20,6 +20,7 @@ public class PlayerDeathListener implements Listener {
             bro1.setLastDamagedBy(null);
             event.setDroppedExp(0);
             event.getDrops().clear();
+            event.setDeathMessage(null);
             //event.setDeathMessage(ChatColor.DARK_AQUA + event.getDeathMessage());
             //SuperCraftBrothers.getInstance().getServer().broadcastMessage(ChatColor.DARK_AQUA + event.getEntity().getName() + " has " + SCBGameManager.getInstance().getCraftBrother(event.getEntity()).getLivesLeft() + " lives left.");
         }

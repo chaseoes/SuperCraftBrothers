@@ -62,6 +62,7 @@ public class SCBGame {
             return;
         }
         ingame.remove(bro.getName().toLowerCase());
+        SCBClass.clearInventory(bro);
         bro.teleport(SCBGameManager.getInstance().getMainLobby());
         bro.sendMessage(ChatColor.DARK_AQUA + "You left the lobby");
         SCBGameManager.getInstance().removeCraftBrother(bro.getPlayer().getName());
@@ -77,8 +78,15 @@ public class SCBGame {
             return;
         }
         ingame.remove(bro.getName().toLowerCase());
-        bro.teleport(SCBGameManager.getInstance().getMainLobby());
-        bro.sendMessage(ChatColor.DARK_AQUA + "You left the game");
+        broadcast(ChatColor.DARK_AQUA + bro.getName() + " left the game");
+        CraftBrother bro1 = SCBGameManager.getInstance().getCraftBrother(bro.getName());
+        if (bro1.isRespawning()) {
+            SCBGameManager.getInstance().addSpawningToLobby(bro.getName());
+        } else {
+            SCBClass.clearInventory(bro);
+            bro.teleport(SCBGameManager.getInstance().getMainLobby());
+            bro.sendMessage(ChatColor.DARK_AQUA + "You left the game");
+        }
         SCBGameManager.getInstance().removeCraftBrother(bro.getName());
         checkWin();
     }
@@ -100,14 +108,17 @@ public class SCBGame {
                 //TODO: random class selection or kicking, whichever works
             }
             new SCBClass(bro.getCurrentClass()).apply(bro);
-            bro.getPlayer().sendMessage(ChatColor.DARK_AQUA + "Round started on" + getName());
+            bro.getPlayer().sendMessage(ChatColor.DARK_AQUA + "Round started on " + getName());
+            bro.setInLobby(false);
         }
+        setInLobby(false);
         //TODO: Scoreboard initialization stuff when it comes out
 
     }
 
     public void winGame(CraftBrother bro) {
         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + bro.getPlayer().getName() + " has won on " + getName());
+        SCBClass.clearInventory(bro.getPlayer());
         bro.getPlayer().teleport(SCBGameManager.getInstance().getMainLobby());
         SCBGameManager.getInstance().removeCraftBrother(bro.getPlayer().getName());
         ingame.clear();
@@ -153,6 +164,7 @@ public class SCBGame {
             broadcast(ChatColor.DARK_AQUA + killed.getPlayer().getName() + " was eliminated from the game");
             ingame.remove(killed.getPlayer().getName().toLowerCase());
             SCBGameManager.getInstance().addSpawningToLobby(killed.getPlayer().getName());
+            SCBGameManager.getInstance().removeCraftBrother(killed.getPlayer().getName());
             checkWin();
         }
 

@@ -15,13 +15,14 @@ public class SCBDeathListener implements Listener {
         CraftBrother killed = event.getKilled();
         CraftBrother killer = event.getKiller();
         killed.setLivesLeft(-1);
+        killed.setRespawning(true);
         if (killer != null) {
             killer.setKills(-1);
             game.broadcast(ChatColor.DARK_AQUA + killed.getPlayer().getName() + " was killed by " + killer.getPlayer().getName());
         } else {
             game.broadcast(ChatColor.DARK_AQUA + killed.getPlayer().getName() + " killed himself");
         }
-        game.broadcast(ChatColor.DARK_AQUA + killed.getPlayer().getName() + " has " + killed.getLivesLeft() + " lives left.");
+        game.broadcast(ChatColor.DARK_AQUA + killed.getPlayer().getName() + " has " + killed.getLivesLeft() + (killed.getLivesLeft() == 1 ? " life" : " lives") + " left.");
         if (killed.getLivesLeft() <= 0) {
             game.playerEliminated(killed);
         }

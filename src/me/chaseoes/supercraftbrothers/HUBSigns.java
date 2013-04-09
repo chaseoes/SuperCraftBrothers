@@ -23,8 +23,8 @@ public class HUBSigns {
             } else {
                 s.setLine(0, ChatColor.DARK_GREEN + "In Progress");
                 s.setLine(1, ChatColor.BOLD + game.getName());
-                s.setLine(2, "Players Alive: " + game.getAlive());
-                s.setLine(3, "Players Dead: " + game.getDead());
+                s.setLine(2, "Alive: " + game.getAlive());
+                s.setLine(3, "Dead: " + game.getDead());
             }
             s.update();
         }

@@ -2,6 +2,9 @@ package me.chaseoes.supercraftbrothers.listeners;
 
 import me.chaseoes.supercraftbrothers.CraftBrother;
 import me.chaseoes.supercraftbrothers.SCBGameManager;
+import me.chaseoes.supercraftbrothers.SuperCraftBrothers;
+import me.chaseoes.supercraftbrothers.classes.SCBClass;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -17,7 +20,8 @@ public class PlayerRespawnListener implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         if (SCBGameManager.getInstance().isInGame(event.getPlayer().getName())) {
-            CraftBrother bro = SCBGameManager.getInstance().getCraftBrother(event.getPlayer());
+            final CraftBrother bro = SCBGameManager.getInstance().getCraftBrother(event.getPlayer());
+            bro.setRespawning(false);
             if (bro.getLivesLeft() > 0) {
                 Location resp;
                 switch (rand.nextInt(4)) {
@@ -36,7 +40,14 @@ public class PlayerRespawnListener implements Listener {
                         break;
                 }
                 event.setRespawnLocation(resp);
-                event.getPlayer().sendMessage(ChatColor.DARK_BLUE + "You have " + bro.getLivesLeft() + " live" + (bro.getLivesLeft() == 1 ? "left" : "s left"));
+                event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "You have " + bro.getLivesLeft() + (bro.getLivesLeft() == 1 ? " life" : " lives") + " left");
+                //Maybe delay said thing 1 tick
+                Bukkit.getScheduler().runTask(SuperCraftBrothers.getInstance(), new Runnable() {
+                    @Override
+                    public void run() {
+                        new SCBClass(bro.getCurrentClass()).apply(bro);
+                    }
+                });
             }
         } else if (SCBGameManager.getInstance().isSpawningToLobby(event.getPlayer().getName())) {
             event.setRespawnLocation(SCBGameManager.getInstance().getMainLobby());
